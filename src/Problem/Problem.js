@@ -3,11 +3,17 @@ import * as S from './styles';
 
 const Problem = () => {
   const [counts, setCounts] = useState({
-    problem: 0,
-    correct: 0,
-    incorrect: 0,
+    problem: JSON.parse(window.localStorage.getItem('problem')) || 0,
+    correct: JSON.parse(window.localStorage.getItem('correct')) || 0,
+    incorrect: JSON.parse(window.localStorage.getItem('incorrect')) || 0,
   });
   const { problem, correct, incorrect } = counts;
+
+  useEffect(() => {
+    window.localStorage.setItem('problem', JSON.stringify(problem));
+    window.localStorage.setItem('correct', JSON.stringify(correct));
+    window.localStorage.setItem('incorrect', JSON.stringify(incorrect));
+  }, [problem, correct, incorrect]);
 
   const getRandom = (min, max) => {
     min = Math.ceil(min);
@@ -69,12 +75,10 @@ const Problem = () => {
   useEffect(() => {
     if (firstValue * secondValue <= 1000) {
       setIsShowThousand(false);
-      console.log(isShowThousand);
-      inputRefs.current[1].focus();
+      inputRefs.current[1]?.focus();
     } else {
       setIsShowThousand(true);
-      console.log(isShowThousand);
-      inputRefs.current[0].focus();
+      inputRefs.current[0]?.focus();
     }
   }, [firstValue, secondValue, isShowThousand]);
 
@@ -98,11 +102,22 @@ const Problem = () => {
     problemInit();
   };
 
+  const onReset = () => {
+    setCounts({
+      problem: 0,
+      correct: 0,
+      incorrect: 0,
+    });
+  };
+
   return (
     <S.Wrapper>
-      <S.Count>{`푼 문제 수 : ${problem}`}</S.Count>
-      <S.Count>{`정답 수 : ${correct}`}</S.Count>
-      <S.Count>{`오답 수 : ${incorrect}`}</S.Count>
+      <S.Header>
+        <span>{`푼 문제 수 : ${problem}`}</span>
+        <span>{`정답 수 : ${correct}`}</span>
+        <span>{`오답 수 : ${incorrect}`}</span>
+        <button onClick={onReset}>초기화</button>
+      </S.Header>
       <S.ProblemContainer>
         <S.Expression>
           <S.ValueContainer>
