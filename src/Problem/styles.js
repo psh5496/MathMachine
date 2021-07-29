@@ -1,28 +1,41 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  & span {
-    width: 120px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  position: relative;
 `;
 
-export const Count = styled.div`
+export const Header = styled.header`
+  position: fixed;
+  right: calc(40% - 480px);
+  top: 200px;
   display: flex;
-  justify-content: flex-end;
-  font-size: 40px;
-  padding: 10px 50px;
+  flex-direction: column;
+  align-items: flex-end;
+
+  & * {
+    font-size: 40px;
+    margin: 10px 50px;
+  }
+
+  & button {
+    font-size: 30px;
+    cursor: pointer;
+    outline: none;
+  }
 `;
 
 export const ProblemContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 120px;
+
+  & span {
+    width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export const Expression = styled.div`
